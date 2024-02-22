@@ -1,0 +1,100 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COCOTEROS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(actcoco/cocos.jpg);
+            background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            background-color: aliceblue;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .circle {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+        .blue {
+            background-color: rgb(186, 186, 239);
+        }
+        .red {
+            background-color: red;
+        }
+        .brown {
+            background-color: rgba(119, 91, 6, 0.955);
+        }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+        <h2>Cantidad de cocos recolectados:</h2>
+        <div id="cocos-collected" class="circle brown"></div>
+        <p>3121 cocos</p>
+        <button onclick="repartirCocos()">Reparticion de cocos</button>
+        <div class="result" id="results" style="display: none;">
+            <h3>Resultado:</h3>
+            <ul id="results-list">
+            </ul>
+        </div>
+    </div>
+    <script>
+    function repartirCocos() {
+        const totalCocos = 3121;
+        const cocosPorNaufrago = [];
+        let cocosRestantes = totalCocos;
+        
+        for (let i = 0; i < 5; i++) {
+            const cocosParaMono = Math.floor(cocosRestantes / 5);
+            cocosPorNaufrago.push(cocosParaMono);
+            cocosRestantes -= cocosParaMono;
+            cocosRestantes--;
+        }
+        
+        let cocosParaMonoPorLaMañana = cocosRestantes;
+        let cocosPorNaufragoPorLaMañana = Math.floor((totalCocos - 5) / 5);
+        
+        const resultsList = document.getElementById('results-list');
+        resultsList.innerHTML = '';
+        
+        let totalCocosNaufragos = 0;
+        
+        for (let i = 0; i < 5; i++) {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="circle blue">👤</span> Náufrago ${i + 1}: ${cocosPorNaufrago[i]} cocos escondidos.<br>Y despues de la reparticion final tiene : ${cocosPorNaufrago[i]+204} cocos <br><br>  `;
+            resultsList.appendChild(li);
+            
+            totalCocosNaufragos += cocosPorNaufrago[i];
+        }
+        
+        const monoLi = document.createElement('li');
+        monoLi.innerHTML = `<span class="circle red">🐒</span> Mono: 5 cocos`;
+        resultsList.appendChild(monoLi);
+
+        const liTotalMañana = document.createElement('li');
+        liTotalMañana.innerHTML = `<span></span> A cada naufrago en la reparticion final le tocaron: ${cocosRestantes/5} cocos`;
+        resultsList.appendChild(liTotalMañana);
+        
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+    }
+    </script>
+    </body>
+    </html>
